@@ -52,4 +52,34 @@ public class DBManager {
         }
         return result;
     }
+
+    public static int getGroupId(String groupName) {
+        int result = 0;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format("select id from groupp where groupp.group = '%s';", groupName));
+
+            while (resultSet.next()) {
+                return resultSet.getInt(ID);
+            }
+
+            statement.execute(String.format("insert into `groupp` (`group`) values ('%s');", groupName));
+            resultSet = statement.executeQuery(String.format("select id from groupp where groupp.group = '%s';", groupName));
+
+            while (resultSet.next()) {
+                result = resultSet.getInt(ID);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static void createStudent(String surname, String name, int group, String date) {
+        try {
+            statement.execute(String.format("INSERT INTO `student` (`surname`, `name`, `id_group`, `date`)" +
+                    " VALUES ('%s', '%s', '%d', '%s');", surname, name, group, date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
