@@ -86,7 +86,7 @@ public class DBManager {
 
     public static void deleteStudents(String[] ids) {
         try {
-            statement.execute(String.format("update `student` set `status` = `0` where id in (%s);",
+            statement.execute(String.format("update `student` set `status` = '0' where id in (%s);",
                     StringService.convertIds(ids)));
         } catch (Exception e) {
             e.printStackTrace();
